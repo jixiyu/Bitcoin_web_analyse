@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	rel="stylesheet">
+<script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+<script
+	src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<title>All Addresses</title>
+<style>
+</style>
+</head>
+
+<body>
+	<h1 style="padding-bottom: 10px">
+		Bitcoin Address <small>Addresses are identifiers which you use
+			to send bitcoins to another person.</small>
+	</h1>
+	<!-- <table>
+		<tr>
+			<td colsopan="3">Tx_hash(timestamp)</td>
+		</tr>
+		<tr>
+			<td>source</td>
+			<td><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></td>
+			<td>destination</tr>
+	</table> -->
+	<table id="data" class="table table-bordered table-hover"></table>
+	<script>
+		function buildTableHTML(tab) {
+			let ret = '<tr>';
+			for (let i = 0; i < tab.th.length; i++) {
+				ret += '<th>' + tab.th[i] + '</th>';
+			}
+			for ( let i in tab.data) {
+				ret += '</tr><tr class="data-row">';
+				let row = tab.data[i];
+				for ( let j in row) {
+					ret += '<td>' + row[j] + '</td>';
+				}
+			}
+			ret += '</tr>';
+			return ret;
+		}
+		$.ajax({
+			url : 'tab?f=TX&ret=json',
+			dataType : 'json',
+			success : function(tab) {
+				console.log(tab);//调试专用
+				$('#data').html(buildTableHTML(tab));
+			},
+		});
+	</script>
+</body>
+</html>

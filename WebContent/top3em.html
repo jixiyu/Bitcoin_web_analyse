@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+	<meta charset="utf-8">
+	<title>Top 3 in every month</title>
+</head>
+<body style="height: 100%; margin: 0">
+	<div id="container" style="width:100%; height:100%;"></div>
+	<script src="http://libs.baidu.com/jquery/1.3.2/jquery.min.js"></script>
+	<script type="text/javascript"
+		src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
+<!-- 	<script type="text/javascript" -->
+<!-- 		src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script> -->
+<!-- 	<script type="text/javascript" -->
+<!-- 		src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script> -->
+<!-- 	<script type="text/javascript" -->
+<!-- 		src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script> -->
+<!-- 	<script type="text/javascript" -->
+<!-- 		src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script> -->
+<!-- 	<script type="text/javascript" -->
+<!-- 		src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script> -->
+<!-- 	<script type="text/javascript" -->
+<!-- 		src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script> -->
+	<script type="text/javascript">
+		var dom = document.getElementById("container");
+		var myChart = echarts.init(dom);
+		var app = {};
+		option = null;
+
+		function loadOption() {
+			var ret = [];
+			var xAxis = [];
+			$.ajax({
+				url : 'tab?f=Top3EachMonth&ret=json',
+				dataType : 'json',
+				success : function(e) {
+					console.log(e);
+					var data = e.data;
+					data.forEach(function(e) {
+						JSON.parse(e[1]).forEach(function(el) {
+							//console.log([month, el.count, el.source]);
+							ret.push([ e[0], el.count, el.source ]);
+						});
+						xAxis.push(e[0]);
+					});
+				},
+				async : false,
+			});
+			console.log(ret);
+			console.log(xAxis);
+			return {
+				title : {
+					text : 'Top3 of Each Mouth',
+					subtext : 'Data comes from bitcoin blockchain.'
+				},
+				grid : {
+					left : '3%',
+					right : '7%',
+					bottom : '3%',
+					containLabel : true
+				},
+				tooltip : {
+					// trigger: 'axis',
+					showDelay : 0,
+					formatter : function(params) {
+						return loadDetail(params.data[0], params.data[2]);
+						//return '<table><tr><td>你</td><td></td></tr></table>';
+					},
+					axisPointer : {
+						show : true,
+						type : 'cross',
+						lineStyle : {
+							type : 'dashed',
+							width : 1
+						}
+					}
+				},
+				toolbox : {
+					feature : {
+						dataZoom : {},
+						brush : {
+							type : [ 'rect', 'polygon', 'clear' ]
+						}
+					}
+				},
+				brush : {},
+				legend : {
+					data : [ 'Jan 2009' ],
+					left : 'center'
+				},
+				xAxis : {
+					type : 'category',
+					data : xAxis
+				},
+				yAxis : [ {
+					type : 'value',
+					scale : true,
+					axisLabel : {
+						formatter : '{value}'
+					},
+					min : 0,
+					splitLine : {
+						show : false
+					}
+				} ],
+				series : [ {
+					name : 'Jan 2009',
+					type : 'scatter',
+					data : ret
+				} ],
+			};
+		}
+
+		function loadDetail(month, related) {
+			var ret = [];
+			$.ajax({
+				url : 'tab?f=TXwC&ret=json',
+				dataType : 'json',
+				data : {
+					source : related,
+					month : month + '%',
+				},
+				success : function(e) {
+					console.log(e);
+					var data = e.data;
+					data.forEach(function(el) {
+						ret.push('<tr><td>' + el[0] + '</td><td>' + el[1]
+								+ '</td><td>' + el[2] + '</td><td>' + el[3]
+								+ '</td><td>' + el[4] + '</td><td>' + el[5]
+								+ '</td></tr>');
+					});
+				},
+				async : false,
+			});
+			console.log(ret);
+			return '<table><tr><th>tx_hash</th><th>output_idx</th><th>source</th><th>destination</th><th>value</th><th>timestamp</th></tr>'
+					+ ret.join('') + '</table>';
+		}
+
+		myChart.setOption(loadOption(), true);
+		// 		if (option && typeof option === "object") {
+		// 			myChart.setOption(option, true);
+		// 		}
+	</script>
+</body>
+</html>

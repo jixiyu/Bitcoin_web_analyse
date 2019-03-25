@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	rel="stylesheet">
+<script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+<script
+	src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<title>All Addresses</title>
+<style>
+body {
+	background-image: url(./img/7.jpg);
+	background-size: cover;
+	background-attachment: fixed;
+}
+
+table {
+	margin: 0px 200px;
+	width: 900px;
+	padding: 20px;
+	background-color: rgba(255, 255, 255, 0.8);
+	box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+img{
+	width:8%;
+
+}
+/* th.time{
+	background-image:url('./img/source2.jpg');
+	background-size: cover;
+	background-position:0px -70px;
+} */
+li.txinfo {
+	height: 80px;
+	list-style: none;
+	line-height: 40px;
+	width: 860px;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	margin: 10px 0px;
+	padding: 0px 20px;
+}
+
+span.txId {
+	color: rgb(9, 135, 195);
+}
+
+span.timestamp {
+	color: rgb(138, 138, 138);
+	float: right;
+	font-size:25px;
+}
+
+td.value {
+	float: right;
+	display:inline-block; 
+	border:1px solid #66CD00;
+	background-color:#66CD00;
+	width:80px;
+	height:35px;
+	text-align:center;
+	font-weight:bold;
+	color:white;
+	border-radius:5px;
+	font-size:20px;
+}
+td.source{
+	font-weight:bold;
+	color:#4876FF;
+}
+td.destination{
+	font-weight:bold;
+	color:#EE6AA7;
+}
+
+</style>
+</head>
+
+<body>
+	<h1 style="padding-bottom: 10px;background-color:white">
+		Blockchain Transaction <small>Transaction is the proof that you traded with someone else.</small>
+	</h1>
+	<table style = "width:50%" valign="middle" id="data" class="table table-condensed" ></table>
+	<script>
+		function buildTableHTML(tab) {
+		let ret = '<tr>';
+		for ( let i in tab.data) {
+			let row = tab.data[i];
+			ret += '<tr><th class="time" colspan="4" align="left">'
+					+ '<img src="img/source1.png"/>'
+					+ '<span class="timestamp">'
+					+ row[3]
+					+ '</span></th></tr>';
+			ret += '<tr style="height:80px;font-size:20px;" ><td class="source">'
+					+ row[0]
+					+ '</td><td><span class="glyphicon glyphicon-arrow-right" style="margin: 0 20px;color:#66CD00;font-size:40px;"></span>'
+					+'</td><td class="destination">'
+					+ row[1] + '</td><td class="value" >' + row[2] + 'BTC'
+					+ '</td>';
+		}
+		ret += '</tr>';
+		return ret;
+		} 
+		$.ajax({
+			url : 'tab?ret=json&' + location.search.substr(1),
+			dataType : 'json',
+			success : function(tab) {
+				console.log(tab);
+				$('#data').html(buildTableHTML(tab));
+			},
+		});
+	</script>
+</body>
+</html>

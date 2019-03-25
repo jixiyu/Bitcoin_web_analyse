@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<body>
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+	<script>
+		$.ajax({
+			"url" : "tab?f=TX&ret=json",
+			"type" : "get",
+			"dataType" : "JSON",
+			"success" : function(ret) {
+				console.log(ret);
+			}
+		})
+	</script>
+</body>
+</html>

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+<meta charset="utf-8">
+<title>比特币任意两个比特币地址间转账关系图</title>
+
+
+<style>
+body {
+	//background-image: url(./img/relative.jpg);
+	//background-image: url(./img/blue1.jpg);
+	background-size: cover;
+	background-attachment: fixed;
+}
+.address{
+    color: -webkit-link;
+}
+/* #mask{
+	position:relative;
+	width:100%;
+	height:100%;
+	background-color:#FFF;
+	filter:blur(1);
+} */
+
+</style>
+</head>
+<body style="height: 100%; margin: 0;">
+<!-- <div id="mask"></div> -->
+	<h3 align="left">比特币任意两个比特币地址间转账关系图</h3>
+		<span id="src" class="address"></span>和<span id="dest" class="address"></span>之间的转账关系如图
+		<div id="container" style="height: 100%"></div>
+		<script type="text/javascript"
+			src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
+		<!--<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+       <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>-->
+		<script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);   
+var categories = [{
+            name: '家人1212',
+            itemStyle: {
+                normal: {
+                    color: "#009800",
+                }
+            }
+        },
+        {
+            name: '朋友1212',
+            itemStyle: {
+                normal: {
+                    //color: "#4592FF",
+					color:"#90EE90",
+                }
+            }
+        },
+        {
+            name: '同事1212',
+            itemStyle: {
+                normal: {
+                    color: "red",
+                }
+            }
+        }
+    ];
+    var legend = ["转出1.1BTC", "转出2.5BTC", "转出3.0BTC"];  //关系列表
+    var peoples = [],
+        linkes = [];
+		var btcaddrlist=[
+"198Uj8K147hyTkW7fdvUk8c4DMmuQ8zWTZ",
+"1CG7YVf2msVU8on6zrAUpfoqzD3avUDiWS",
+"124wRWVmAkRejjv6aPuF3B4qi5ww4uYKLy",
+"1Ff3gA2jS6frEowYnVGr7DHm57VUSFuxoY",
+"12cbQLTFMXRnSzktFkuoG3eHoMeFtpTu3S"//,
+// "12d2XXfBBMLiGK7HJfnuf26nS4prtmBzSx",
+// "12iXGm1K65JzhLoiARaozTHmgrf2ShecjU",
+// "12rVs6Y3yypb9TrCY91mWZ88vaWaxRshBC",
+// "12VKdj1La4fnqX7qTQPfPwm9McBxtmtSsG",
+// "13AgD4FbYfjGhxe6shQAhZ7S7ZfvnhVVmo"
+]
+var remaindBTC=[0,50,49.67,0,18,0,0,0,0,0,0,49,49,0,0,0,17.49,32.51,25,0.33,49.67,500,10,10,1,1,10,10,10,1,1,10,50,1600,550,150,600,50,2,1000,500,32.51,17.49,25,25,25,25]
+		
+	//产生角色
+	/*
+    for (var i = 0; i < 5; i++) {
+        peoples.push({
+            name: i,
+            draggable: true,
+            displayname: 'BTC' + Math.floor(Math.random() * 1000),
+			bteaddr:btcaddrlist[i],
+			rembtc:remaindBTC[i],
+            //category: Math.floor(Math.random() * 3)   //随机分配分类
+			category: Math.floor(1)   //分配分类
+        });
+    };
+    */
+    //---------------------------
+        peoples.push({
+            name: 0,
+            draggable: true,
+            displayname: 'BTC' +56,
+			bteaddr:btcaddrlist[0],
+			rembtc:remaindBTC[0],
+            //category: Math.floor(Math.random() * 3)   //随机分配分类
+			category: Math.floor(1)   //分配分类
+        });
+        
+        peoples.push({
+            name: 1,
+            draggable: true,
+            displayname: 'BTC' +35,
+			bteaddr:btcaddrlist[1],
+			rembtc:remaindBTC[1],
+            //category: Math.floor(Math.random() * 3)   //随机分配分类
+			category: Math.floor(1)   //分配分类
+        });
+        
+        peoples.push({
+            name: 2,
+            draggable: true,
+            displayname: 'BTC' +63,
+			bteaddr:btcaddrlist[2],
+			rembtc:remaindBTC[2],
+            //category: Math.floor(Math.random() * 3)   //随机分配分类
+			category: Math.floor(1)   //分配分类
+        });
+        
+        peoples.push({
+            name: 3,
+            draggable: true,
+            displayname: 'BTC' +55,
+			bteaddr:btcaddrlist[3],
+			rembtc:remaindBTC[3],
+            //category: Math.floor(Math.random() * 3)   //随机分配分类
+			category: Math.floor(1)   //分配分类
+        });
+        
+        peoples.push({
+            name: 4,
+            draggable: true,
+            displayname: 'BTC' +37,
+			bteaddr:btcaddrlist[4],
+			rembtc:remaindBTC[4],
+            //category: Math.floor(Math.random() * 3)   //随机分配分类
+			category: Math.floor(1)   //分配分类
+        });
+        
+    
+    
+    
+    
+    
+    
+    
+    //---------------------------
+    
+    
+    
+    //产生转账关系
+	/*
+    for (var i = 0; i < 43; i++) {
+        linkes.push({
+            source: i,                                      //起点
+            target: Math.floor(Math.random() * 43),         //终点
+            value: legend[Math.floor(Math.random() * 3)],   //赋予关系  *****修改转出钱数****
+            lineStyle: {
+                normal: {
+                    color: '#38f',
+                    curveness: Math.random() * 0.4       // 线的弯曲度 0-1之间 越大则歪曲度更大
+                }
+            },
+            label: {
+                normal: {
+                    textStyle: {
+                        color: '#07ac72',
+                        fontSize: 12                    //关系字体
+                    }
+                }
+            }
+        });
+    };
+*/
+function RelationGet(start,end,money)
+{ 
+linkes.push({
+            source: start,                                      //起点
+            target: end,         //终点
+            value: "转出"+money+"BTC",   //赋予关系  *****修改转出钱数****
+            lineStyle: {
+                normal: {
+                    color: '#38f',
+                    curveness: Math.random() * 0.4       // 线的弯曲度 0-1之间 越大则歪曲度更大
+                }
+            },
+            label: {
+                normal: {
+                    textStyle: {
+                        color: '#07ac72',
+                        fontSize: 12                   //
+                    }
+                }
+            }
+        });
+
+}
+
+RelationGet(0,1,50);
+RelationGet(1,2,0.33);
+RelationGet(2,3,500);
+RelationGet(1,4,10);
+RelationGet(4,2,10);
+// RelationGet(5,4,1);
+// RelationGet(4,2,1);
+// RelationGet(4,3,10);
+// RelationGet(7,0,10);
+// RelationGet(8,5,10);
+// RelationGet(4,6,1);
+// RelationGet(4,7,1);
+// RelationGet(4,8,10);
+// RelationGet(5,2,50);
+// RelationGet(6,3,1600);
+// RelationGet(7,3,550);
+// RelationGet(8,2,150);
+// RelationGet(9,3,600);
+// RelationGet(1,4,50);
+// RelationGet(1,5,1);
+// RelationGet(1,6,1000);
+// RelationGet(3,7,100);
+// RelationGet(4,9,400);
+// RelationGet(5,8,32.51);
+// RelationGet(5,9,17.49);
+// RelationGet(6,0,25);
+// RelationGet(1,0,25);
+// RelationGet(6,2,25);
+// RelationGet(6,3,25);
+
+    var option = {
+        tooltip: {
+            show: true,
+            formatter: function(e) {
+                //return e.data.displayname;
+				return "地址："+e.data.bteaddr+"，目前拥有"+e.data.rembtc+"BTC";
+            }
+        },
+        legend: {
+            x: "center",
+            data: legend,
+            tooltip: {
+                show: true
+            },
+        },
+        animationDurationUpdate: 1500,
+        animationEasingUpdate: 'quinticInOut',
+        series: [{
+            categories: categories,
+            type: 'graph',
+            layout: 'force',
+            symbol: "circle",
+            symbolSize: 30,
+            roam: true, //可以用鼠标滚轮缩小放大效果
+            edgeSymbol: ['circle', 'arrow'],
+            edgeSymbolSize: [4, 10],
+            // 连接线上的文字
+            focusNodeAdjacency:false, //划过只显示对应关系
+            edgeLabel: {
+                normal: {
+                    show: true,
+                    textStyle: {
+                        fontSize: 4  //关系字体
+                    },
+                    formatter: "{c}"
+                }
+            },
+            lineStyle: {
+                normal: {
+                    opacity: 1,
+                    width: 2,
+                    curveness: 0
+                }
+            },
+            // 圆圈内的文字
+            label: {
+                normal: {
+                    show: true,
+                    formatter: function(e) {
+                        return e.data.displayname;
+                    },
+                    textStyle: {
+                        color: '#333',
+                        fontFamily: '微软雅黑',
+                        fontSize: 12
+                    }
+                }
+            },
+            force: {
+                repulsion: 500
+            },
+            data: peoples,
+            links: linkes,
+        }]
+    };
+
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+    myChart.on('click', function(params) {
+        if (params.dataType === "node") {
+            alert("比特币地址:"+params.data.bteaddr+"\n")
+			//alert("该BTC地址是：12cbQLTFMXRnSzktFkuoG3eHoMeFtpTu3S\n目前含有币数:"+rembtc+"BTC")
+        }
+		
+	//	if (params.dataType === "edgeLabel") {
+    //       alert(params.data.displayname)
+    //   }
+    });
+
+    var str = window.location.search.substr(1).split('_');
+
+    var src = document.getElementById('src');
+    src.innerText = str[0].substr(0,8)+'...';
+    src.title = str[0];
+
+    var dest = document.getElementById('dest');
+    dest.innerText = str[1].substr(0,8)+'...';
+    dest.title = str[1];
+       </script>
+</body>
+</html>
